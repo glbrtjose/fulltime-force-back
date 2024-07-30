@@ -11,7 +11,7 @@ console.log('process.env.PORT: ', process.env.PORT);
 //Looking for a local port to host our web application
 const port = process.env.PORT || 4000;
 // Create test endpoint
-app.get("/", async (req, res) => {
+app.get("/test", async (req, res) => {
   res.status(200).json({ message: "Endpoint responding" });
 });
 //Initialize our web-app on the selected port
