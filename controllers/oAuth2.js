@@ -21,10 +21,10 @@ router.post("/", async (req, res) => {
     });
     return res
       .cookie("token", token, {
-        httpOnly: true,
+        // httpOnly: true,
         secure: true,
         // domain: process.env.FRONT_URI,
-        sameSite:'none',
+        sameSite:'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({ status: true, message: "Login success" });
