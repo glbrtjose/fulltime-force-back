@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: [process.env.FRONT_URI],
+    origin: process.env.FRONT_URI,
     credentials: true,
   })
 );
