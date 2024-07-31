@@ -41,24 +41,38 @@ app.use(
 );
 //Looking for a local port to host our web application
 const port = process.env.PORT || 4000;
-// Create endpoints
-app.use("/api", blogPostController);
-app.use("/api/auth", oAuth2Controller);
-app.use("/api/verify", async (req, res) => {
+const checkSession = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return res.json({
+      return res.status(403).json({
         status: false,
         message: "Unauthorized",
       });
     }
-    const decoded = await jwt.verify(token, process.env.SECRET);
-    return res.json({ status: true, message: "Auth success" });
+    const decoded = await jwt.verify(
+      token,
+      process.env.SECRET,
+      (err, decoded) => {
+        if (err) {
+          return res
+            .status(403)
+            .send({ success: false, message: "Failed to authenticate user." });
+        } else {
+          req.decoded = decoded;
+          next();
+        }
+      }
+    );
   } catch (error) {
-    return res.json({ status: true, message: "Auth denied" });
+    return res
+      .status(403)
+      .send({ success: false, message: "Failed to authenticate user." });
   }
-});
+};
+// Create endpoints
+app.use("/api/auth", oAuth2Controller);
+app.use("/api", checkSession, blogPostController);
 //Initialize our web-app on the selected port
 app.listen(port, () => {});
 console.log(`Example app listening at http://localhost:${port}`);
