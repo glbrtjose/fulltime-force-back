@@ -15,7 +15,7 @@ console.log('process.env.PORT: ', process.env.PORT);
 //Looking for a local port to host our web application
 const port = process.env.PORT || 4000;
 // Create test endpoint
-app.use('/api', blogPostController);
+// app.use('/api', blogPostController);
 //Initialize our web-app on the selected port
 app.listen(port, () => {});
 console.log(`Example app listening at http://localhost:${port}`);
