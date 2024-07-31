@@ -19,10 +19,17 @@ router.post("/", async (req, res) => {
     const token = jwt.sign({ id: user._id, username }, process.env.SECRET, {
       expiresIn: "1h",
     });
-    return res.cookie("token", token, { httpOnly: true, secure: true, maxAge: 360000 }).json({ status: true, message: "Login success" });
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        path: "/",
+        secure: true,
+        maxAge: 360000,
+      })
+      .json({ status: true, message: "Login success" });
     // return res.json();
   } catch (error) {
-    console.log('error: ', error);
+    console.log("error: ", error);
     res.status(500).json({ error });
   }
 });
