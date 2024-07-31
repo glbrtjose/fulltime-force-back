@@ -1,7 +1,7 @@
 // Import dotenv to load environment variables
 require('dotenv').config();
 // Init database config
-require('./db');
+// require('./db');
 // import blogPosts controller
 // const blogPostController = require('./controllers/blogPost');
 //We import express for use
