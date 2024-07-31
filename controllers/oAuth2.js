@@ -27,7 +27,10 @@ router.post("/", async (req, res) => {
         // domain: "vercel.app",
         // sameSite: "lax",
         // maxAge: 30 * 24 * 60 * 60 * 1000,
-        secure: true, sameSite: "none", maxAge: 7 * 24 * 60 * 60 * 1000
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        domain: ".vercel.app",
       })
       .json({ status: true, message: "Login success" });
     // return res.json();
