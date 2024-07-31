@@ -43,7 +43,7 @@ app.use(
 const port = process.env.PORT || 4000;
 const checkSession = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const token = req.headers.authorization;
     if (!token) {
       return res.status(403).json({
         status: false,
