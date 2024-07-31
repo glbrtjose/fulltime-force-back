@@ -16,6 +16,9 @@ console.log('process.env.PORT: ', process.env.PORT);
 const port = process.env.PORT || 4000;
 // Create test endpoint
 // app.use('/api', blogPostController);
+app.get("/", async (req, res) => {
+  res.status(200).json({ message: "Endpoint responding" });
+});
 //Initialize our web-app on the selected port
 app.listen(port, () => {});
 console.log(`Example app listening at http://localhost:${port}`);
