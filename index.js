@@ -44,16 +44,20 @@ const port = process.env.PORT || 4000;
 // Create endpoints
 app.use("/api", blogPostController);
 app.use("/api/auth", oAuth2Controller);
-app.use("/api/verify", async (req, res) => {  
-  const token = req.cookies.token;
-  if (!token) {
-    return res.json({
-      status: false,
-      message: "Unauthorized",
-    });
+app.use("/api/verify", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.json({
+        status: false,
+        message: "Unauthorized",
+      });
+    }
+    const decoded = await jwt.verify(token, process.env.SECRET);
+    return res.json({ status: true, message: "Auth success" });
+  } catch (error) {
+    return res.json({ status: true, message: "Auth denied" });
   }
-  const decoded = await jwt.verify(token, process.env.SECRET);
-  return res.json({ status: true, message: "Auth success" });
 });
 //Initialize our web-app on the selected port
 app.listen(port, () => {});
