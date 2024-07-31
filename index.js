@@ -3,7 +3,7 @@ require('dotenv').config();
 // Init database config
 require('./db');
 // import blogPosts controller
-const blogPostController = require('./controllers/blogPost');
+// const blogPostController = require('./controllers/blogPost');
 //We import express for use
 const express = require("express");
 // Allows Cross-origin resource sharing
