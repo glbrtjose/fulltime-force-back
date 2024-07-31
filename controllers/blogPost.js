@@ -5,13 +5,20 @@ const BlogPost = require("../models/BlogPost");
 // Get all blogposts
 router.get("/blogposts", async (req, res) => {
   try {
-    const plogPosts = await BlogPost.find();
+    const { page, size } = req.query;
+    const plogPosts = await BlogPost.find()
+      .skip((+page - 1) * +size)
+      .limit(+size);
+    const plogPosts2 = await BlogPost.find()
+      .skip((+page + 1 - 1) * +size)
+      .limit(+size);
     const result = {
       result: plogPosts,
-      next: false,
+      next: plogPosts2.length > 0,
     };
     res.json(result);
   } catch (error) {
+    console.log("error: ", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
