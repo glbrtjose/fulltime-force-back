@@ -16,12 +16,13 @@ router.post("/", async (req, res) => {
     if (!compare) {
       return res.status(403).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({ username }, process.env.SECRET, {
+    const token = jwt.sign({ id: user._id, username }, process.env.SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("token", token, { httpOnly: true, maxAge: 360000 });
-    return res.json({ status: true, message: "Login success" });
+    return res.cookie("token", token, { httpOnly: true, maxAge: 360000 }).json({ status: true, message: "Login success" });
+    // return res.json();
   } catch (error) {
+    console.log('error: ', error);
     res.status(500).json({ error });
   }
 });

@@ -6,11 +6,10 @@ var bodyParser = require("body-parser");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 // import blogPosts controller
 const blogPostController = require("./controllers/blogPost");
 const oAuth2Controller = require("./controllers/oAuth2");
-const userController = require("./controllers/user");
-const verifyController = require("./controllers/verify");
 //We import express for use
 const express = require("express");
 // Allows Cross-origin resource sharing
@@ -34,35 +33,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-console.log("process.env.FRONT_URI: ", process.env.FRONT_URI);
 app.use(
   cors({
-    origin: process.env.FRONT_URI,
+    origin: [process.env.FRONT_URI],
     credentials: true,
   })
 );
-app.use(cors());
 //Looking for a local port to host our web application
 const port = process.env.PORT || 4000;
 // Create endpoints
 app.use("/api", blogPostController);
 app.use("/api/auth", oAuth2Controller);
-const verifyUser = async (req, res) => {
-  try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.json({
-        status: false,
-        message: "Unauthorized",
-      });
-    }
-    const decoded = await jwt.verify(token, process.env.SECRET);
-    next();
-  } catch (err) {
-    return res.json(err);
+app.use("/api/verify", async (req, res) => {  
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json({
+      status: false,
+      message: "Unauthorized",
+    });
   }
-};
-app.use("/api/verify", verifyUser, (req, res) => {
+  const decoded = await jwt.verify(token, process.env.SECRET);
   return res.json({ status: true, message: "Auth success" });
 });
 //Initialize our web-app on the selected port
