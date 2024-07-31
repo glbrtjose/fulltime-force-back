@@ -22,9 +22,8 @@ router.post("/", async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
-        path: "/",
         secure: true,
-        maxAge: 360000,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .json({ status: true, message: "Login success" });
     // return res.json();
