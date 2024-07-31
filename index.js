@@ -70,6 +70,7 @@ const checkSession = async (req, res, next) => {
       .send({ success: false, message: "Failed to authenticate user." });
   }
 };
+app.set("trust proxy", true);
 // Create endpoints
 app.use("/api/auth", oAuth2Controller);
 app.use("/api", checkSession, blogPostController);
