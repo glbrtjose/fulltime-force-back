@@ -22,11 +22,12 @@ router.post("/", async (req, res) => {
     return res
       .cookie("token", token, {
         // httpOnly: true,
-        secure: true,
+        // secure: true,
         // domain: process.env.FRONT_URI,
-        domain: "vercel.app",
-        sameSite: "lax",
-        maxAge: 30 * 24 * 60 * 60 * 1000,
+        // domain: "vercel.app",
+        // sameSite: "lax",
+        // maxAge: 30 * 24 * 60 * 60 * 1000,
+        secure: true, sameSite: "none", maxAge: 7 * 24 * 60 * 60 * 1000
       })
       .json({ status: true, message: "Login success" });
     // return res.json();
