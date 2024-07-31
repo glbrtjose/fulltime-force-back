@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
         // httpOnly: true,
         secure: true,
         // domain: process.env.FRONT_URI,
-        domain: ".vercel.app",
+        domain: "vercel.app",
         sameSite: "lax",
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
